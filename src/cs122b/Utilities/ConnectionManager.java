@@ -19,6 +19,7 @@ public class ConnectionManager {
 
 
 	public static boolean loadDataSource(String userName, String pswd, boolean enableLog) {
+		// check to see if we should enable logging
 		if (!enableLog) {
 			Properties p = new Properties(System.getProperties());
 			p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
