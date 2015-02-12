@@ -4,6 +4,7 @@ import cs122b.DB.*;
 import cs122b.Models.*;
 import cs122b.Utilities.ConnectionManager;
 import cs122b.Utilities.SessionManager;
+import cs122b.Utilities.StringUtils;
 
 
 import java.sql.*;
@@ -90,9 +91,12 @@ public class JDBCProgram {
                     this.customQueryProcedure();
                     break;
                 case 7:
-                    logout = this.logoutProcedure();
+                    this.addNewMovieProcedure();
                     break;
                 case 8:
+                    logout = this.logoutProcedure();
+                    break;
+                case 9:
                     toQuit = this.quitProcedure();
                     break;
                 default:
@@ -114,8 +118,39 @@ public class JDBCProgram {
         System.out.println("4 - Delete a customer");
         System.out.println("5 - Display DB metadata");
         System.out.println("6 - Execute Custom Query");
-        System.out.println("7 - Logout");
-        System.out.println("8 - Quit Application");
+        System.out.println("7 - Add Movie ");
+        System.out.println("8 - Logout");
+        System.out.println("9 - Quit Application");
+    }
+
+    private void addNewMovieProcedure() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Add New Movie");
+        System.out.println("Enter movie title: ");
+        String title = in.nextLine();
+        System.out.println("Enter year: ");
+        String year = in.nextLine();
+        System.out.println("Enter Director: ");
+        String director = in.nextLine();
+        System.out.println("Enter banner url: ");
+        String bannerUrl = "";
+        String trailerUrl = "";
+        bannerUrl = in.nextLine();
+        System.out.println("Enter trailer url: ");
+        trailerUrl = in.nextLine();
+        System.out.println("Enter star's first name: ");
+        String starsFname = in.nextLine();
+        System.out.println("Enter star's last name: ");
+        String starsLname = in.nextLine();
+        System.out.println("Enter movie genre: ");
+        String genre = in.nextLine();
+        if (!StringUtils.isNullOrEmpty(title) && !StringUtils.isNullOrEmpty(year) &&
+                !StringUtils.isNullOrEmpty(director) && !StringUtils.isNullOrEmpty(starsFname) &&
+                !StringUtils.isNullOrEmpty(starsLname) && !StringUtils.isNullOrEmpty(genre)) {
+            String output = db.Movies.addMovieWithSP(title, Integer.parseInt(year), director, bannerUrl,
+                    trailerUrl, starsFname, starsLname, genre);
+            System.out.println(output);
+        }
     }
 
     /*

@@ -1,9 +1,9 @@
 USE moviedb;
-DROP procedure IF EXISTS 'AddMovie';
+DROP procedure IF EXISTS AddMovie;
 
 DELIMITER $$
-USE 'moviedb'$$
-CREATE DEFINER='root'@'localhost' PROCEDURE 'AddMovie'(IN t varchar(200), 
+USE moviedb $$
+CREATE DEFINER='root'@'localhost' PROCEDURE AddMovie(IN t varchar(200), 
                              IN y int, 
                              IN d varchar(200), 
                              IN b_url varchar(200),

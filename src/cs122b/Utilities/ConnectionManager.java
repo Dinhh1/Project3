@@ -30,7 +30,7 @@ public class ConnectionManager {
 
 		try {
 			cpds.setDriverClass(driverClass);
-			cpds.setAutoCommitOnClose(false);
+//			cpds.setAutoCommitOnClose(false);
 			cpds.setJdbcUrl(connectionURL);
 			cpds.setUser(userName);
 			cpds.setPassword(pswd);

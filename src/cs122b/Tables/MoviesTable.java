@@ -594,7 +594,7 @@ public class MoviesTable extends Table {
     	Connection con = null;
     	CallableStatement cStatement = null;
     	String output = "";
-    	String sql = "{(call AddMovie(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+    	String sql = "{call AddMovie(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
     	try {
     		
     		con = ConnectionManager.getConnection();
@@ -610,7 +610,6 @@ public class MoviesTable extends Table {
     		cStatement.registerOutParameter(9, Types.VARCHAR);
     		cStatement.executeQuery();
     		output = cStatement.getString("output");
-    		System.out.println(output);
     	} catch (SQLException e) {
 			System.out.print(e.getMessage());
     	} finally {
