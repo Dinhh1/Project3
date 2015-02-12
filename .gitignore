@@ -22,3 +22,7 @@
 .idea/workspace.xml
 
 Project3.iml
+
+*.class
+
+.idea/libraries/c3p0_0_9_5_.xml
