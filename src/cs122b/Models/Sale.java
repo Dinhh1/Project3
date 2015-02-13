@@ -54,22 +54,18 @@ public class Sale extends BaseModel {
     }
 
     public void setId(int id) {
-        this.isDirty = true;
         this.id = id;
     }
 
     public void setCustomerId(int cid) {
-        this.isDirty = true;
         this.customer_id = cid;
     }
 
     public void setMovieId(int mid) {
-        this.isDirty = true;
         this.movie_id = mid;
     }
 
     public void setSalesDate(Date sdate) {
-        this.isDirty = true;
         this.sale_date = sdate;
     }
 }

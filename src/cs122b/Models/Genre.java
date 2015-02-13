@@ -26,12 +26,10 @@ public class Genre extends BaseModel {
 	
 	public void setId(int id) {
 		this.id = id;
-		this.isDirty = true;
 	}
 	
 	public void setName(String n) {
 		this.name = n;
-		this.isDirty = true;
 	}
 
 }

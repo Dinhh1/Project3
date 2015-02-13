@@ -61,17 +61,14 @@ public class CreditCard extends BaseModel{
     }
 
     public void setFirstName(String f) {
-        this.isDirty = true;
         this.first_name = f;
     }
 
     public void setLastName(String l) {
-        this.isDirty = true;
         this.last_name = l;
     }
 
     public void setExpiration(Date exp) {
-        this.isDirty = true;
         this.expiration = exp;
     }
 

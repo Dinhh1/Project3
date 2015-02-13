@@ -2,6 +2,8 @@ package cs122b.Models;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import cs122b.DB.*;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -77,32 +79,26 @@ public class Movie extends BaseModel {
     }
 
     public void setId(int id) {
-        this.isDirty = true;
         this.id = id;
     }
 
     public void setTitle(String t) {
-        this.isDirty = true;
         this.title = t;
     }
 
     public void setYear(int y) {
-        this.isDirty = true;
         this.year = y;
     }
 
     public void setDirector(String d) {
-        this.isDirty = true;
         this.director = d;
     }
 
     public void setBannerURL(String burl) {
-        this.isDirty = true;
         this.banner_url = burl;
     }
 
     public void setTrailerURL(String turl) {
-        this.isDirty = true;
         this.trailer_url = turl;
     }
     
@@ -113,16 +109,12 @@ public class Movie extends BaseModel {
     public void setStarsInMovies(ArrayList<Star> m) {
     	this.stars_in_movie = m;
     }
-
-    @Override
-    public String toString() {
-        String s = "ID = " + this.id + "\n";
-        s += "Title = " + this.title + "\n";
-        s += "Year = " + this.year + "\n";
-        s += "Director = " + this.director + "\n";
-        s += "Banner URL = " + this.banner_url + "\n";
-        s += "Trailer URL = " + this.trailer_url;
-        return s;
-    }
+//
+//    @Override
+//    public String toString() {
+//        GsonBuilder builder = new GsonBuilder();
+//        Gson gson = builder.create();
+//        return gson.toJson(this);
+//    }
 
 }

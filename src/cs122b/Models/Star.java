@@ -72,28 +72,23 @@ public class Star extends BaseModel{
     }
 
     public void setId(int id) {
-        this.isDirty = true;
         this.id = id;
     }
 
     // set methods
     public void setFirstName(String f) {
-        this.isDirty = true;
         this.first_name = f;
     }
 
     public void setLastName(String l) {
-        this.isDirty = true;
         this.last_name = l;
     }
 
     public void setDateOfBirth(Date dob) {
-        this.isDirty = true;
         this.dob = dob;
     }
 
     public void setPhotoUrl(String purl) {
-        this.isDirty = true;
         this.photo_url = purl;
     }
 

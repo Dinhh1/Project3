@@ -73,37 +73,30 @@ public class Customer extends BaseModel{
 
     // set methods
     public void setId(int id) {
-        this.isDirty = true;
         this.id = id;
     }
 
     public void setFirstName(String fName) {
-        this.isDirty = true;
         this.first_name = fName;
     }
 
     public void setLastName(String lName) {
-        this.isDirty = true;
         this.last_name = lName;
     }
 
     public void setCreditCardId(String ccId) {
-        this.isDirty = true;
         this.cc_id = ccId;
     }
 
     public void setAddress(String addy) {
-        this.isDirty = true;
         this.address = addy;
     }
 
     public void setEmail(String email) {
-        this.isDirty = true;
         this.email = email;
     }
 
     public void setPassword(String pswd) {
-        this.isDirty = true;
         this.password = pswd;
     }
 

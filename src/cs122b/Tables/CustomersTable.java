@@ -155,20 +155,6 @@ public class CustomersTable extends Table {
     }
 
 
-    /**
-     * Update a customer in the db
-     *
-     * @param c properly populated creditcard object
-     * @return the number of rows affected by the query or - 1 if model was unchanged.
-     *
-     */
-    public int updateEntry(BaseModel c) {
-        //TODO:: needs to be implemented, make sure to check if c.isDirty() before updating, save the trip of updating something unaltered
-        int success = -1;
-        if (c.isDirty())
-            return success;
-        return success;
-    }
 
     /**
      * Get a list of customers by name
