@@ -72,12 +72,4 @@ public class CreditCard extends BaseModel{
         this.expiration = exp;
     }
 
-    @Override
-    public String toString() {
-        String s = "ID = " + this.id + "\n";
-        s += "first_name = " + this.first_name + "\n";
-        s += "last_name = " + this.last_name + "\n";
-        s += "expiration = " + this.expiration.toString();
-        return s;
-    }
 }

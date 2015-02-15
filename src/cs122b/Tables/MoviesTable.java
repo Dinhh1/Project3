@@ -36,33 +36,11 @@ public class MoviesTable extends Table {
         return -1;
     }
 
-    public int deleteEntry(BaseModel obj) {
-        Movie m = (Movie)obj;
-        if (m.getId() == MovieDB.DBConstant.INVALID_ID)
-            return -1;
-        return this.deleteEntry(m.getId());
-    }
-
-    public int deleteEntry(int id) {
-        //TODO:: NEEDS TO BE IMPLEMENTED
-        return -1;
-    }
-
-    public int updateEntry(BaseModel obj) {
-        //TODO:: NEEDS TO BE IMPLEMENTED
-        return -1;
-
-    }
-
-    public int getTableSize() {
-        //TODO:: NEEDS TO BE IMPLEMENTED
-        return -1;
-
-    }
 
     public String getTableName() {
         return MovieDB.DBConstant.TBL_MOVIES;
     }
+
 
     public ArrayList<Movie> getMoviesWithQueryString(String sql, int page, int size, final String sortAttribute) {
     	int offset = Table.calculateOffset(page, size);

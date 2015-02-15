@@ -8,10 +8,8 @@ import cs122b.Utilities.StringUtils;
 
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.sql.Date;
+import java.util.*;
 
 
 /**
@@ -94,9 +92,12 @@ public class JDBCProgram {
                     this.addNewMovieProcedure();
                     break;
                 case 8:
-                    logout = this.logoutProcedure();
+                    this.generateDBIntegrityReport();
                     break;
                 case 9:
+                    logout = this.logoutProcedure();
+                    break;
+                case 10:
                     toQuit = this.quitProcedure();
                     break;
                 default:
@@ -119,8 +120,67 @@ public class JDBCProgram {
         System.out.println("5 - Display DB metadata");
         System.out.println("6 - Execute Custom Query");
         System.out.println("7 - Add Movie ");
-        System.out.println("8 - Logout");
-        System.out.println("9 - Quit Application");
+        System.out.println("8 - Check Database Integrity");
+        System.out.println("9 - Logout");
+        System.out.println("10 - Quit Application");
+    }
+    private <T> void printDBSet(ArrayList<T> set) {
+        for (T obj: set) {
+            System.out.println(obj.toString());
+        }
+    }
+
+    private void generateDBIntegrityReport() {
+
+        System.out.println("Generating DB Integrity Report");
+
+        System.out.println("Looking for movies without stars...");
+        ArrayList<Movie> moviesWithoutStars = db.IntegritySet.getMoviesWithoutStars();
+        this.printDBSet(moviesWithoutStars);
+
+        System.out.println("Looking for stars without movies...");
+        ArrayList<Star> starsWithoutMovies = db.IntegritySet.getStarsWithoutMovies();
+        this.printDBSet(starsWithoutMovies);
+
+        System.out.println("Looking for genres without movies...");
+        ArrayList<Genre> genresWithoutMovies = db.IntegritySet.getGenresWithoutMovies();
+        this.printDBSet(genresWithoutMovies);
+
+        System.out.println("Looking for movies without genres...");
+        ArrayList<Movie> moviesWithoutGenres = db.IntegritySet.getMoviesWithoutGenres();
+        this.printDBSet(moviesWithoutGenres);
+
+        System.out.println("Looking for stars without first or last name");
+        ArrayList<Star> starsWithoutName = db.IntegritySet.getStarsWithoutFirstOrLastName();
+        this.printDBSet(starsWithoutName);
+
+        System.out.println("Looking expired credit cards with existing customers");
+        ArrayList<CreditCard> expiredCreditCards = db.IntegritySet.getExpiredCreditCards();
+        this.printDBSet(expiredCreditCards);
+
+        // with the duplicate queries, i populated a field called count, and you can just
+        // genre.getCount() to count the number of duplicates if you want to display that
+        System.out.println("Looking for duplicate genres...");
+        ArrayList<Genre> duplicateGenres = db.IntegritySet.getDuplicateGenres();
+        this.printDBSet(duplicateGenres);
+
+        System.out.println("Looking for duplicate movies...");
+        ArrayList<Movie> duplicateMovies = db.IntegritySet.getDuplicateMovies();
+        this.printDBSet(duplicateMovies);
+
+        System.out.println("Looking for duplicate stars...");
+        ArrayList<Star> duplicateStars = db.IntegritySet.getDuplicateStars();
+        this.printDBSet(duplicateStars);
+
+        System.out.println("Looking for stars with invalid birthdays...");
+        ArrayList<Star> starsWithInvalidBirthdays = db.IntegritySet.getStarsWithoutInvalidBirthdays();
+        this.printDBSet(starsWithInvalidBirthdays);
+
+        System.out.println("Looking for customer's email without @ sign...");
+        ArrayList<Customer> customersWithInvalidEmail = db.IntegritySet.getCustomersWithInvalidEmail();
+        this.printDBSet(customersWithInvalidEmail);
+
+
     }
 
     private void addNewMovieProcedure() {

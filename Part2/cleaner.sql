@@ -26,15 +26,15 @@ SELECT 'Movie/star/genres that are the same. Make sure you group the IDs of the 
 
 SELECT 'Genres that are the same.';
 
-SELECT name, count(name) FROM genres GROUP BY name HAVING count(name) > 1;
+SELECT *, count(name) FROM genres GROUP BY name HAVING count(name) > 1;
 
 SELECT 'Movies(name, year) that are the same.';
 
-SELECT title, year FROM movies GROUP BY title, year HAVING count(*) > 1;
+select *, count(*) as count from movies group by title, year having count(*) > 1;
 
 SELECT 'Stars(first name, last name, dob) that are the same.';
 
-SELECT first_name, last_name, dob FROM stars GROUP BY first_name, last_name, dob HAVING count(*) > 1;
+select *, count(*) as count from stars group by first_name, last_name, dob having count(*) > 1;
 
 SELECT 'Birth date > today or year < ~1900.';
 

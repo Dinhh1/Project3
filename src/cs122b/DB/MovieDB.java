@@ -1,9 +1,11 @@
 package cs122b.DB;
 
+import cs122b.Models.Movie;
 import cs122b.Tables.*;
 import cs122b.Utilities.ConnectionManager;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by dinhho on 1/12/15.
@@ -17,6 +19,7 @@ public class MovieDB {
     public SalesTable Sales;
     public GenreTable Genres;
     public EmployeesTable Employees;
+    public IntegritySet IntegritySet;
     /**
      * Create an instance of our db class
      *
@@ -30,6 +33,7 @@ public class MovieDB {
         this.Sales = new SalesTable();
         this.Genres = new GenreTable();
         this.Employees = new EmployeesTable();
+        this.IntegritySet = new IntegritySet();
     }
 
     /**
@@ -109,6 +113,7 @@ public class MovieDB {
         }
         System.out.println();
     }
+
 
 
     /******************************************************************************************************************

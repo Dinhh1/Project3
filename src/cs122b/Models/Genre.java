@@ -20,6 +20,13 @@ public class Genre extends BaseModel {
 		this.id = i;
 		this.name = n;
 	}
+
+	public Genre(int i, String n, int count) {
+		super();
+		this.id = i;
+		this.name = n;
+		this.count = count;
+	}
 	
 	public int getId() { return this.id;}
 	public String getName() { return this.name;}
@@ -32,4 +39,13 @@ public class Genre extends BaseModel {
 		this.name = n;
 	}
 
+	// adding this property to hold the duplicate
+	private int count = 1;
+	public void setCount(int c) {
+		this.count = c;
+	}
+
+	public int getCount() {
+		return this.count;
+	}
 }

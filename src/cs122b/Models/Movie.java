@@ -25,6 +25,7 @@ public class Movie extends BaseModel {
     private String banner_url = null;
     private String trailer_url = null;
 
+    private int count = 1;
     // nullable properties
     ArrayList<Star> stars_in_movie;
     ArrayList<Genre> genres_of_movie;
@@ -41,6 +42,17 @@ public class Movie extends BaseModel {
         this.director = d;
         this.banner_url = b;
         this.trailer_url = tr;
+    }
+
+    public Movie(int id, String t, int y, String d, String b, String tr, int count) {
+        super();
+        this.id = id;
+        this.title = t;
+        this.year = y;
+        this.director = d;
+        this.banner_url = b;
+        this.trailer_url = tr;
+        this.count = count;
     }
 
     public int getId() {
@@ -66,7 +78,8 @@ public class Movie extends BaseModel {
     public String getTrailerURL() {
         return this.trailer_url;
     }
-    
+
+    public int getCount() {return this.count;}
 	@XmlElement(name="genre")
     public ArrayList<Genre> getGenresOfMovie() {
     	return this.genres_of_movie;
@@ -109,12 +122,8 @@ public class Movie extends BaseModel {
     public void setStarsInMovies(ArrayList<Star> m) {
     	this.stars_in_movie = m;
     }
-//
-//    @Override
-//    public String toString() {
-//        GsonBuilder builder = new GsonBuilder();
-//        Gson gson = builder.create();
-//        return gson.toJson(this);
-//    }
+
+    public void setCount(int c) { this.count = c;}
+
 
 }

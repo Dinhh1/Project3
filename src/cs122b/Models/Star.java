@@ -24,6 +24,8 @@ public class Star extends BaseModel{
     private Date dob;
     private String photo_url;
     private ArrayList<Movie> movies;
+
+    private int count;
     public Star() {
         super();
         this.id = MovieDB.DBConstant.INVALID_ID;
@@ -40,6 +42,16 @@ public class Star extends BaseModel{
         this.last_name = l;
         this.dob = dob;
         this.photo_url = purl;
+    }
+
+    public Star(int id, String f, String l, Date dob, String purl, int count) {
+        super();
+        this.id = id;
+        this.first_name = f;
+        this.last_name = l;
+        this.dob = dob;
+        this.photo_url = purl;
+        this.count = count;
     }
 
     // get methods
@@ -91,6 +103,10 @@ public class Star extends BaseModel{
     public void setPhotoUrl(String purl) {
         this.photo_url = purl;
     }
+
+    public void setCount(int c) { this.count = c;}
+
+    public int getCount() {return this.count;}
 
     public void setMovies(ArrayList<Movie> m) {
     	this.movies = m;
