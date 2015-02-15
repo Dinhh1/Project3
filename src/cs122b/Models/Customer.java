@@ -100,16 +100,5 @@ public class Customer extends BaseModel{
         this.password = pswd;
     }
 
-    @Override
-    public String toString() {
-        String s = "ID = " + this.id + "\n";
-        s += "first_name = " + this.first_name + "\n";
-        s += "last_name = " + this.last_name + "\n";
-        s += "cc_id = " + this.cc_id + "\n";
-        s += "address = " + this.address + "\n";
-        s += "email = " + this.email + "\n";
-        s += "password = " + this.password;
-        return s;
-    }
 } // end class
 

@@ -165,6 +165,12 @@ public class MovieDB {
         return query;
     }
 
+    public <T> void printDBSet(ArrayList<T> set) {
+        for (T obj: set) {
+            System.out.println(obj.toString());
+        }
+    }
+
     /**
      * Created by dinhho on 1/12/15.
      */

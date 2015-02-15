@@ -124,11 +124,7 @@ public class JDBCProgram {
         System.out.println("9 - Logout");
         System.out.println("10 - Quit Application");
     }
-    private <T> void printDBSet(ArrayList<T> set) {
-        for (T obj: set) {
-            System.out.println(obj.toString());
-        }
-    }
+
 
     private void generateDBIntegrityReport() {
 
@@ -136,49 +132,49 @@ public class JDBCProgram {
 
         System.out.println("Looking for movies without stars...");
         ArrayList<Movie> moviesWithoutStars = db.IntegritySet.getMoviesWithoutStars();
-        this.printDBSet(moviesWithoutStars);
+        this.db.printDBSet(moviesWithoutStars);
 
         System.out.println("Looking for stars without movies...");
         ArrayList<Star> starsWithoutMovies = db.IntegritySet.getStarsWithoutMovies();
-        this.printDBSet(starsWithoutMovies);
+        this.db.printDBSet(starsWithoutMovies);
 
         System.out.println("Looking for genres without movies...");
         ArrayList<Genre> genresWithoutMovies = db.IntegritySet.getGenresWithoutMovies();
-        this.printDBSet(genresWithoutMovies);
+        this.db.printDBSet(genresWithoutMovies);
 
         System.out.println("Looking for movies without genres...");
         ArrayList<Movie> moviesWithoutGenres = db.IntegritySet.getMoviesWithoutGenres();
-        this.printDBSet(moviesWithoutGenres);
+        this.db.printDBSet(moviesWithoutGenres);
 
         System.out.println("Looking for stars without first or last name");
         ArrayList<Star> starsWithoutName = db.IntegritySet.getStarsWithoutFirstOrLastName();
-        this.printDBSet(starsWithoutName);
+        this.db.printDBSet(starsWithoutName);
 
         System.out.println("Looking expired credit cards with existing customers");
         ArrayList<CreditCard> expiredCreditCards = db.IntegritySet.getExpiredCreditCards();
-        this.printDBSet(expiredCreditCards);
+        this.db.printDBSet(expiredCreditCards);
 
         // with the duplicate queries, i populated a field called count, and you can just
         // genre.getCount() to count the number of duplicates if you want to display that
         System.out.println("Looking for duplicate genres...");
         ArrayList<Genre> duplicateGenres = db.IntegritySet.getDuplicateGenres();
-        this.printDBSet(duplicateGenres);
+        this.db.printDBSet(duplicateGenres);
 
         System.out.println("Looking for duplicate movies...");
         ArrayList<Movie> duplicateMovies = db.IntegritySet.getDuplicateMovies();
-        this.printDBSet(duplicateMovies);
+        this.db.printDBSet(duplicateMovies);
 
         System.out.println("Looking for duplicate stars...");
         ArrayList<Star> duplicateStars = db.IntegritySet.getDuplicateStars();
-        this.printDBSet(duplicateStars);
+        this.db.printDBSet(duplicateStars);
 
         System.out.println("Looking for stars with invalid birthdays...");
         ArrayList<Star> starsWithInvalidBirthdays = db.IntegritySet.getStarsWithoutInvalidBirthdays();
-        this.printDBSet(starsWithInvalidBirthdays);
+        this.db.printDBSet(starsWithInvalidBirthdays);
 
         System.out.println("Looking for customer's email without @ sign...");
         ArrayList<Customer> customersWithInvalidEmail = db.IntegritySet.getCustomersWithInvalidEmail();
-        this.printDBSet(customersWithInvalidEmail);
+        this.db.printDBSet(customersWithInvalidEmail);
 
 
     }
