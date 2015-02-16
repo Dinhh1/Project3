@@ -130,6 +130,8 @@ public class JDBCProgram {
 
         System.out.println("Generating DB Integrity Report");
 
+        db.IntegritySet.createReportFile();
+
         System.out.println("Looking for movies without stars...");
         ArrayList<Movie> moviesWithoutStars = db.IntegritySet.getMoviesWithoutStars();
         this.db.printDBSet(moviesWithoutStars);
@@ -176,7 +178,7 @@ public class JDBCProgram {
         ArrayList<Customer> customersWithInvalidEmail = db.IntegritySet.getCustomersWithInvalidEmail();
         this.db.printDBSet(customersWithInvalidEmail);
 
-
+        db.IntegritySet.closeReportFile();
     }
 
     private void addNewMovieProcedure() {
