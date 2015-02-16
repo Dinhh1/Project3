@@ -42,6 +42,7 @@ public class Star extends BaseModel{
         this.last_name = l;
         this.dob = dob;
         this.photo_url = purl;
+        this.count = 1;
     }
 
     public Star(int id, String f, String l, Date dob, String purl, int count) {

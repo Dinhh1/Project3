@@ -20,7 +20,7 @@ public class IntegritySet extends Table
 {
 
     private static File htmlReportFile;
-    private static String filePath = "/Users/derrickjchie/Desktop/report.html";
+    private static String filePath = System.getProperty("user.dir") + "/report.html";
     private static BufferedWriter bufferWriter;
 
     public void createReportFile()
