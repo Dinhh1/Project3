@@ -19,11 +19,6 @@ import cs122b.Utilities.ConnectionManager;
 public class PrivilegeManager extends HttpServlet {
 	private static final long serialVersionUID = 2242093137806792131L;
 	
-	public void doGet(HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-	
 	public void doPost(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		//handle changing permissions for the current user
@@ -44,7 +39,7 @@ public class PrivilegeManager extends HttpServlet {
 			query = storeProcedurePrivilegeUpdate(request);
 		}
 		else {
-			response.sendRedirect("UserManager2.jsp");
+			response.sendRedirect("PrivilegeManager.jsp");
 		}
 		
 		System.out.println(query);
@@ -57,19 +52,28 @@ public class PrivilegeManager extends HttpServlet {
 			ps = con.prepareStatement(query);
 			result = ps.executeUpdate();
 			session.setAttribute("updated", 1);
-			response.sendRedirect("UserManager1.jsp");
+			response.sendRedirect("UserManager.jsp");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			response.sendRedirect("UserManager1.jsp");
+			response.sendRedirect("UserManager.jsp");
 		}
 		
 	}
 	
 	private String databasePrivilegeUpdate(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String query = "GRANT ";
+		String query;
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").equals("on")) {
+			query = "REVOKE ";
+		}
+		else {
+			query = "GRANT ";
+		}
 		if (request.getParameter("ALL") != null && request.getParameter("ALL").equals("on")) {
-			query += "ALL ON " + request.getParameter("database-name1") + " TO " + session.getAttribute("user") + ";";
+			if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) 
+				query += "ALL ON " + request.getParameter("database-name1") + " FROM " + session.getAttribute("user");
+			else
+				query += "ALL ON " + request.getParameter("database-name1") + " TO " + session.getAttribute("user");
 			return query;
 		}
 		Enumeration<String> paramNames = request.getParameterNames();
@@ -77,7 +81,7 @@ public class PrivilegeManager extends HttpServlet {
 		while (paramNames.hasMoreElements()) {
 			String paramName = (String) paramNames.nextElement();
 			String paramValue = request.getParameter(paramName);
-			if (paramValue.equals("on")) {
+			if (paramValue.equals("on") && !paramName.equals("REVOKE")) {
 				if (first == 1) {
 					query += paramName;
 					first = -1;
@@ -86,20 +90,31 @@ public class PrivilegeManager extends HttpServlet {
 					query += ", " + paramName;
 			}
 		}
-		query += " ON " + request.getParameter("database-name1") + " TO " + session.getAttribute("user");
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
+			query += " ON " + request.getParameter("database-name1") + " FROM " + session.getAttribute("user");
+		}
+		else {
+			query += " ON " + request.getParameter("database-name1") + " TO " + session.getAttribute("user");
+		}
 		
 		return query;
 	}
 	
 	private String tablePrivilegeUpdate(HttpServletRequest request) {
-		String query = "GRANT ";
 		HttpSession session = request.getSession();
+		String query;
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
+			query = "REVOKE ";
+		}
+		else {
+			query = "GRANT ";
+		}
 		Enumeration<String> paramNames = request.getParameterNames();
 		int first = 1;
 		while (paramNames.hasMoreElements()) {
 			String paramName = (String) paramNames.nextElement();
 			String paramValue = request.getParameter(paramName);
-			if (paramValue.equals("on")) {
+			if (paramValue.equals("on") && !paramName.equals("REVOKE")) {
 				if (first == 1) {
 					query += paramName;
 					first = -1;
@@ -108,20 +123,30 @@ public class PrivilegeManager extends HttpServlet {
 					query += ", " + paramName;
 			}
 		}
-		query += " ON " + request.getParameter("database-name2") + "." + request.getParameter("table-name") + " TO " + session.getAttribute("user");
-		
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
+			query += " ON " + request.getParameter("database-name2") + "." + request.getParameter("table-name") + " FROM " + session.getAttribute("user");
+		}
+		else {
+			query += " ON " + request.getParameter("database-name2") + "." + request.getParameter("table-name") + " TO " + session.getAttribute("user");
+		}
 		return query;
 	}
 
 	private String columnPrivilegeUpdate(HttpServletRequest request) {
-		String query = "GRANT ";
 		HttpSession session = request.getSession();
+		String query;
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
+			query = "REVOKE ";
+		}
+		else {
+			query = "GRANT ";
+		}
 		Enumeration<String> paramNames = request.getParameterNames();
 		int first = 1;
 		while (paramNames.hasMoreElements()) {
 			String paramName = (String) paramNames.nextElement();
 			String paramValue = request.getParameter(paramName);
-			if (paramValue.equals("on")) {
+			if (paramValue.equals("on") && !paramName.equals("REVOKE")) {
 				if (first == 1) {
 					query += paramName + "(" + request.getParameter("column-name") + ")";
 					first = -1;
@@ -130,20 +155,31 @@ public class PrivilegeManager extends HttpServlet {
 					query += ", " + paramName + "(" + request.getParameter("column-name") + ")";
 			}
 		}
-		query += " ON " + request.getParameter("database-name3") + "." + request.getParameter("table-name") + " TO " + session.getAttribute("user");
-		
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
+			query += " ON " + request.getParameter("database-name3") + "." + request.getParameter("table-name") + " FROM " + session.getAttribute("user");
+
+		}
+		else {
+			query += " ON " + request.getParameter("database-name3") + "." + request.getParameter("table-name") + " TO " + session.getAttribute("user");
+		}
 		return query;
 	}
 
 	private String storeProcedurePrivilegeUpdate(HttpServletRequest request) {
-		String query = "GRANT ";
 		HttpSession session = request.getSession();
+		String query;
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
+			query = "REVOKE ";
+		}
+		else {
+			query = "GRANT ";
+		}
 		Enumeration<String> paramNames = request.getParameterNames();
 		int first = 1;
 		while (paramNames.hasMoreElements()) {
 			String paramName = (String) paramNames.nextElement();
 			String paramValue = request.getParameter(paramName);
-			if (paramValue.equals("on")) {
+			if (paramValue.equals("on") && !paramName.equals("REVOKE")) {
 				if (first == 1) {
 					query += paramName;
 					first = -1;
@@ -152,7 +188,12 @@ public class PrivilegeManager extends HttpServlet {
 					query += ", " + paramName;
 			}
 		}
-		query += " ON " + request.getParameter("database-name4") + "." + request.getParameter("stored-procedure-name") + " TO " + session.getAttribute("user");
+		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
+			query += " ON " + request.getParameter("database-name4") + "." + request.getParameter("stored-procedure-name") + " FROM " + session.getAttribute("user");
+		}
+		else {
+			query += " ON " + request.getParameter("database-name4") + "." + request.getParameter("stored-procedure-name") + " TO " + session.getAttribute("user");
+		}
 		
 		return query;
 	}

@@ -40,11 +40,11 @@ public class UserManager extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", "\'" + username + "\'@\'localhost\'");
 			session.setAttribute("grants", rs);
-			response.sendRedirect("UserManager2.jsp");
+			response.sendRedirect("PrivilegeManager.jsp");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("UserManager1.jsp");
+			response.sendRedirect("UserManager.jsp");
 		}
 	}
 	
@@ -65,13 +65,13 @@ public class UserManager extends HttpServlet {
 			ps.setString(2, password);
 			result = ps.executeUpdate();
 			
-			response.sendRedirect("UserManager1.jsp");
+			response.sendRedirect("UserManager.jsp");
 		} catch (SQLException e) {
 			request.getSession().setAttribute("success", -1);
-			response.sendRedirect("UserManager1.jsp");
+			response.sendRedirect("UserManager.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("UserManager1.jsp");
+			response.sendRedirect("UserManager.jsp");
 		}
 	}
 
