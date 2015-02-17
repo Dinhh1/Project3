@@ -57,7 +57,7 @@ public class IntegritySet extends Table
         String sql = "SELECT * FROM movies AS m LEFT JOIN genres_in_movies AS g ON g.movie_id = m.id WHERE g.genre_id is NULL";
         String title = "Movies without any genres.";
         ArrayList<Movie> movies = moviesQueryHelper(sql, false);
-        writeMovieReport(title, movies);
+        writeMovieReport(title, movies, false);
 
         return movies;
     }
@@ -67,7 +67,7 @@ public class IntegritySet extends Table
         String sql = "SELECT * FROM stars WHERE dob > CURDATE() OR dob < '1900-1-10'";
         String title = "Birth date > today or year < ~1900.";
         ArrayList<Star> stars = starQueryHelper(sql, false);
-        writeStarReport(title, stars);
+        writeStarReport(title, stars, false);
 
         return stars;
     }
@@ -76,7 +76,7 @@ public class IntegritySet extends Table
         String sql = "select *, count(*) as count from stars group by first_name, last_name, dob having count(*) > 1";
         String title = "Stars that are the same.";
         ArrayList<Star> stars = starQueryHelper(sql, true);
-        writeStarReport(title, stars);
+        writeStarReport(title, stars, true);
 
         return stars;
     }
@@ -86,7 +86,7 @@ public class IntegritySet extends Table
         String sql = "select *, count(name) as count from genres group by name having count(name) > 1";
         String title = "Genres that are the same.";
         ArrayList<Genre> genres = genreQueryHelper(sql, true);
-        writeGenreReport(title, genres);
+        writeGenreReport(title, genres, true);
 
         return genres;
     }
@@ -96,7 +96,7 @@ public class IntegritySet extends Table
         String sql = "select *, count(*) as count from movies group by title, year having count(*) > 1";
         String title = "Movies that are the same.";
         ArrayList<Movie> movies = moviesQueryHelper(sql, true);
-        writeMovieReport(title, movies);
+        writeMovieReport(title, movies, true);
 
         return movies;
     }
@@ -116,7 +116,7 @@ public class IntegritySet extends Table
         String sql = "SELECT * FROM genres AS g LEFT JOIN genres_in_movies AS m ON m.genre_id = g.id WHERE m.movie_id is NULL";
         String title = "Genres without any movies.";
         ArrayList<Genre> genres = genreQueryHelper(sql, false);
-        writeGenreReport(title, genres);
+        writeGenreReport(title, genres, false);
 
         return genres;
     }
@@ -136,7 +136,7 @@ public class IntegritySet extends Table
         String sql = "SELECT * FROM movies AS m LEFT JOIN stars_in_movies AS s ON m.id = s.movie_id WHERE s.movie_id is NULL";
         String title = "Movies without any star.";
         ArrayList<Movie> movies = moviesQueryHelper(sql, false);
-        writeMovieReport(title, movies);
+        writeMovieReport(title, movies, false);
 
         return movies;
     }
@@ -146,7 +146,7 @@ public class IntegritySet extends Table
         String sql = "SELECT * FROM stars AS s LEFT JOIN stars_in_movies AS m ON m.star_id = s.id WHERE m.star_id is NULL";
         String title = "Stars without any movie.";
         ArrayList<Star> stars = starQueryHelper(sql, false);
-        writeStarReport(title, stars);
+        writeStarReport(title, stars, false);
 
         return stars;
     }
@@ -156,7 +156,7 @@ public class IntegritySet extends Table
         String sql = "SELECT * FROM stars WHERE first_name is NULL OR first_name = '' OR last_name is NULL OR last_name =''";
         String title = "Stars with no first name or last name.";
         ArrayList<Star> stars = starQueryHelper(sql, false);
-        writeStarReport(title, stars);
+        writeStarReport(title, stars, false);
 
         return stars;
     }
@@ -307,7 +307,7 @@ public class IntegritySet extends Table
         return result;
     }
 
-    public static void writeMovieReport(String title, ArrayList<Movie> movies)
+    public static void writeMovieReport(String title, ArrayList<Movie> movies, boolean includeCount)
     {
         try
         {
@@ -320,9 +320,14 @@ public class IntegritySet extends Table
                     + "<th style='text-align: left; border: 1px solid black'>year</th>"
                     + "<th style='text-align: left; border: 1px solid black'>director</th>"
                     + "<th style='text-align: left; border: 1px solid black'>banner_url</th>"
-                    + "<th style='text-align: left; border: 1px solid black'>trailer_url</th>"
-                    + "<th style='text-align: left; border: 1px solid black'>count</th>"
-                    + "</tr>");
+                    + "<th style='text-align: left; border: 1px solid black'>trailer_url</th>");
+            if (includeCount) {
+                bufferWriter.write("<th style='text-align: left; border: 1px solid black'>count</th>");
+            }
+            bufferWriter.write("</tr>");
+
+//                    + "<th style='text-align: left; border: 1px solid black'>count</th>"
+//                    + "</tr>");
 
             for (int i = 0; i < movies.size(); i++)
             {
@@ -335,9 +340,11 @@ public class IntegritySet extends Table
                         + "<td style='border: 1px solid black;'>" + movie.getYear() + "</td>"
                         + "<td style='border: 1px solid black;'>" + movie.getDirector() + "</td>"
                         + "<td style='border: 1px solid black;'>" + movie.getBannerURL() + "</td>"
-                        + "<td style='border: 1px solid black;'>" + movie.getTrailerURL() + "</td>"
-                        + "<td style='border: 1px solid black;'>" + movie.getCount() + "</td>"
-                        + "</tr>");
+                        + "<td style='border: 1px solid black;'>" + movie.getTrailerURL() + "</td>");
+                if (includeCount) {
+                    bufferWriter.write("<td style='border: 1px solid black;'>" + movie.getCount() + "</td>");
+                }
+                bufferWriter.write("</tr>");
             }
 
             bufferWriter.write("</table>");
@@ -348,7 +355,7 @@ public class IntegritySet extends Table
         }
     }
 
-    public static void writeStarReport(String title, ArrayList<Star> stars)
+    public static void writeStarReport(String title, ArrayList<Star> stars, boolean includeCount)
     {
         try
         {
@@ -360,10 +367,11 @@ public class IntegritySet extends Table
                     + "<th style='text-align: left; border: 1px solid black'>first_name</th>"
                     + "<th style='text-align: left; border: 1px solid black'>last_name</th>"
                     + "<th style='text-align: left; border: 1px solid black'>dob</th>"
-                    + "<th style='text-align: left; border: 1px solid black'>photo_url</th>"
-                    + "<th style='text-align: left; border: 1px solid black'>count</th>"
-                    + "</tr>");
-
+                    + "<th style='text-align: left; border: 1px solid black'>photo_url</th>");
+            if (includeCount) {
+                bufferWriter.write("<th style='text-align: left; border: 1px solid black'>count</th>");
+            }
+            bufferWriter.write("</tr>");
             for (int i = 0; i < stars.size(); i++)
             {
                 Star star = stars.get(i);
@@ -374,9 +382,11 @@ public class IntegritySet extends Table
                         + "<td style='border: 1px solid black;'>" + star.getFirstName() + "</td>"
                         + "<td style='border: 1px solid black;'>" + star.getLastName() + "</td>"
                         + "<td style='border: 1px solid black;'>" + star.getDateOfBirth() + "</td>"
-                        + "<td style='border: 1px solid black;'>" + star.getPhotoUrl() + "</td>"
-                        + "<td style='border: 1px solid black;'>" + star.getCount() + "</td>"
-                        + "</tr>");
+                        + "<td style='border: 1px solid black;'>" + star.getPhotoUrl() + "</td>");
+                if (includeCount) {
+                    bufferWriter.write("<td style='border: 1px solid black;'>" + star.getCount() + "</td>");
+                }
+                bufferWriter.write("</tr>");
             }
 
             bufferWriter.write("</table>");
@@ -387,7 +397,7 @@ public class IntegritySet extends Table
         }
     }
 
-    public static void writeGenreReport(String title, ArrayList<Genre> genres)
+    public static void writeGenreReport(String title, ArrayList<Genre> genres, boolean includeCount)
     {
         try
         {
@@ -396,9 +406,11 @@ public class IntegritySet extends Table
             bufferWriter.write("<tr>"
                     + "<th style='text-align: left; border: 1px solid black'>row</th>"
                     + "<th style='text-align: left; border: 1px solid black'>id</th>"
-                    + "<th style='text-align: left; border: 1px solid black'>name</th>"
-                    + "<th style='text-align: left; border: 1px solid black'>count</th>"
-                    + "</tr>");
+                    + "<th style='text-align: left; border: 1px solid black'>name</th>");
+            if (includeCount) {
+                bufferWriter.write("<th style='text-align: left; border: 1px solid black'>count</th>");
+            }
+            bufferWriter.write("</tr>");
 
             for (int i = 0; i < genres.size(); i++)
             {
@@ -407,9 +419,11 @@ public class IntegritySet extends Table
                 bufferWriter.write("<tr>"
                         + "<td style='border: 1px solid black;'>" + (i + 1) + "</td>"
                         + "<td style='border: 1px solid black;'>" + genre.getId() + "</td>"
-                        + "<td style='border: 1px solid black;'>" + genre.getName() + "</td>"
-                        + "<td style='border: 1px solid black;'>" + genre.getCount() + "</td>"
-                        + "</tr>");
+                        + "<td style='border: 1px solid black;'>" + genre.getName() + "</td>");
+                if (includeCount) {
+                    bufferWriter.write("<td style='border: 1px solid black;'>" + genre.getCount() + "</td>");
+                }
+                bufferWriter.write("</tr>");
             }
 
             bufferWriter.write("</table>");
