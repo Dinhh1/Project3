@@ -231,6 +231,7 @@
                                             <input type="checkbox" name="EVENT">EVENT<br>
                                             <input type="checkbox" name="GRANT OPTION">GRANT OPTION<br>
                                             <input type="checkbox" name="LOCK TABLES">LOCK TABLES<br>
+                                            <input type="checkbox" name="CREATE ROUTINE">CREATE ROUTINE<br>
                                             <input type="checkbox" name="ALL">ALL<br>
                                             <input type="checkbox" name="REVOKE">REVOKE?
 											<br><br>
@@ -301,7 +302,6 @@
 											<input type="checkbox" name="ALTER ROUTINE">ALTER ROUTINE<br>
                                             <input type="checkbox" name="EXECUTE">EXECUTE<br>
                                             <input type="checkbox" name="GRANT OPTION">GRANT OPTION<br>
-                                            <input type="checkbox" name="CREATE ROUTINE">CREATE ROUTINE<br>
                                             <input type="checkbox" name="REVOKE">REVOKE?
 											<br><br>
 											<button type="submit" class="btn-upper btn btn-primary">Add Permisions</button>

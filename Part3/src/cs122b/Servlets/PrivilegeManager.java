@@ -78,6 +78,7 @@ public class PrivilegeManager extends HttpServlet {
 		}
 		Enumeration<String> paramNames = request.getParameterNames();
 		int first = 1;
+		String databaseName = request.getParameter("database-name1") + ".*";
 		while (paramNames.hasMoreElements()) {
 			String paramName = (String) paramNames.nextElement();
 			String paramValue = request.getParameter(paramName);
@@ -90,11 +91,12 @@ public class PrivilegeManager extends HttpServlet {
 					query += ", " + paramName;
 			}
 		}
+		
 		if (request.getParameter("REVOKE") != null && request.getParameter("REVOKE").toString().equals("on")) {
-			query += " ON " + request.getParameter("database-name1") + " FROM " + session.getAttribute("user");
+			query += " ON " + databaseName + " FROM " + session.getAttribute("user");
 		}
 		else {
-			query += " ON " + request.getParameter("database-name1") + " TO " + session.getAttribute("user");
+			query += " ON " + databaseName + " TO " + session.getAttribute("user");
 		}
 		
 		return query;
